@@ -2,9 +2,29 @@
   "name": "kubbe",
   "version": "0.1.0",
   "description": "A tiny React library that normalizes logo visuals — like stacking wooden blocks neatly",
-  "module": "src/index.ts",
   "type": "module",
-  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target browser --format esm --sourcemap=external --external react --external react-dom && bun build src/index.ts --outfile dist/index.cjs --target browser --format cjs --sourcemap=inline --external react --external react-dom && bun run build:types",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist",
+    "prepublishOnly": "bun run build",
+    "test": "bun test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rostimelk/kubbe.git"
@@ -13,17 +33,14 @@
   "bugs": {
     "url": "https://github.com/rostimelk/kubbe/issues"
   },
-  "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts"
-    }
-  },
-  "scripts": {
-    "test": "bun test",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
+  "keywords": [
+    "react",
+    "logo",
+    "normalize",
+    "layout",
+    "component"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@chromatic-com/storybook": "^3",
     "@storybook/addon-essentials": "^8",
@@ -47,13 +64,5 @@
     "react": "^18",
     "react-dom": "^18",
     "typescript": "^5"
-  },
-  "keywords": [
-    "react",
-    "logo",
-    "normalize",
-    "layout",
-    "component"
-  ],
-  "license": "MIT"
+  }
 }
