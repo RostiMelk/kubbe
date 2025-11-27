@@ -1,6 +1,13 @@
-import { useMemo } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useMemo } from "react";
+import {
+  DEFAULT_BASE_SIZE,
+  DEFAULT_DENSITY_FACTOR,
+  DEFAULT_GAP,
+  DEFAULT_SCALE_FACTOR,
+} from "../src/constants";
 import { KubbeStrip } from "../src/KubbeStrip";
+import type { AlignmentMode } from "../src/types";
 
 const allLogos = [
   new URL("./logos/aether.svg", import.meta.url).href,
@@ -82,8 +89,8 @@ function shuffleArray<T>(array: T[], seed: number): T[] {
     randomValue = Math.floor(seededRandom() * currentIndex);
     currentIndex--;
     [shuffled[currentIndex], shuffled[randomValue]] = [
-      shuffled[randomValue]!,
-      shuffled[currentIndex]!,
+      shuffled[randomValue],
+      shuffled[currentIndex],
     ];
   }
 
@@ -97,6 +104,8 @@ function KubbeStripPlayground({
   scaleFactor,
   densityAware,
   densityFactor,
+  cropToContent,
+  alignBy,
   gap,
 }: {
   count: number;
@@ -105,6 +114,8 @@ function KubbeStripPlayground({
   scaleFactor: number;
   densityAware: boolean;
   densityFactor: number;
+  cropToContent: boolean;
+  alignBy: AlignmentMode;
   gap: number;
 }) {
   const logos = useMemo(() => {
@@ -119,6 +130,8 @@ function KubbeStripPlayground({
       scaleFactor={scaleFactor}
       densityAware={densityAware}
       densityFactor={densityFactor}
+      cropToContent={cropToContent}
+      alignBy={alignBy}
       gap={gap}
     />
   );
@@ -132,32 +145,52 @@ const meta: Meta = {
   },
   argTypes: {
     count: {
+      name: "Count",
       control: { type: "range", min: 1, max: allLogos.length, step: 1 },
       description: "Number of logos to display",
     },
     shuffleSeed: {
+      name: "Shuffle Seed",
       control: { type: "range", min: 1, max: 1000, step: 1 },
       description: "Shuffle seed (change to randomize logo order)",
     },
     baseSize: {
+      name: "Base Size",
       control: { type: "range", min: 16, max: 128, step: 4 },
       description: "Base size for normalization",
     },
     scaleFactor: {
+      name: "Scale Factor",
       control: { type: "range", min: 0, max: 1, step: 0.1 },
       description:
         "Scale factor (0 = uniform widths, 0.5 = balanced, 1 = uniform heights)",
     },
     densityAware: {
+      name: "Density Aware",
       control: "boolean",
       description: "Enable pixel density compensation",
     },
     densityFactor: {
+      name: "Density Factor",
       control: { type: "range", min: 0, max: 1, step: 0.1 },
       description:
         "How much density affects sizing (0 = no effect, 1 = full effect)",
     },
+    cropToContent: {
+      name: "Crop to Content",
+      control: "boolean",
+      description:
+        "Crop logos to their content bounds (returns base64 cropped images)",
+    },
+    alignBy: {
+      name: "Align By",
+      control: "select",
+      options: ["bounds", "visual-center"],
+      description:
+        "Alignment mode: bounds (geometric center) or visual-center (weighted center)",
+    },
     gap: {
+      name: "Gap",
       control: { type: "range", min: 0, max: 48, step: 4 },
       description: "Gap between logos",
     },
@@ -170,12 +203,14 @@ type Story = StoryObj<typeof KubbeStripPlayground>;
 
 export const Playground: Story = {
   args: {
-    count: allLogos.length,
+    count: allLogos.length / 4,
     shuffleSeed: 42,
-    baseSize: 48,
-    scaleFactor: 0.5,
+    baseSize: DEFAULT_BASE_SIZE,
+    scaleFactor: DEFAULT_SCALE_FACTOR,
     densityAware: true,
-    densityFactor: 0.5,
-    gap: 16,
+    densityFactor: DEFAULT_DENSITY_FACTOR,
+    cropToContent: false,
+    alignBy: "visual-center",
+    gap: DEFAULT_GAP,
   },
 };

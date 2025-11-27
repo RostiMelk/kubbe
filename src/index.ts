@@ -1,13 +1,15 @@
 export { KubbeStrip } from "./KubbeStrip";
-export { useKubbe } from "./useKubbe";
-
+export { cropToDataUrl } from "./measure";
 export type {
-  LogoSource,
-  NormalizedLogo,
+  AlignmentMode,
   BoundingBox,
   ImageRenderProps,
+  KubbeStripProps,
+  LogoSource,
+  NormalizedLogo,
   RenderImageFn,
   UseKubbeOptions,
   UseKubbeResult,
-  KubbeStripProps,
+  VisualCenter,
 } from "./types";
+export { useKubbe } from "./useKubbe";

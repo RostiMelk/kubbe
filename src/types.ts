@@ -1,8 +1,17 @@
-import type { CSSProperties, ReactNode, ImgHTMLAttributes } from "react";
+import type { CSSProperties, ImgHTMLAttributes, ReactNode } from "react";
+
+export type AlignmentMode = "bounds" | "visual-center";
 
 export interface LogoSource {
   src: string;
   alt?: string;
+}
+
+export interface VisualCenter {
+  x: number;
+  y: number;
+  offsetX: number;
+  offsetY: number;
 }
 
 export interface NormalizedLogo {
@@ -15,6 +24,8 @@ export interface NormalizedLogo {
   normalizedHeight: number;
   aspectRatio: number;
   pixelDensity?: number;
+  visualCenter?: VisualCenter;
+  croppedSrc?: string;
 }
 
 export interface BoundingBox {
@@ -29,6 +40,7 @@ export interface MeasurementResult {
   height: number;
   contentBox?: BoundingBox;
   pixelDensity?: number;
+  visualCenter?: VisualCenter;
 }
 
 export type ImageRenderProps = ImgHTMLAttributes<HTMLImageElement> & {
@@ -48,6 +60,7 @@ export interface UseKubbeOptions {
   contrastThreshold?: number;
   densityAware?: boolean;
   densityFactor?: number;
+  cropToContent?: boolean;
 }
 
 export interface UseKubbeResult {
@@ -64,6 +77,8 @@ export interface KubbeStripProps {
   contrastThreshold?: number;
   densityAware?: boolean;
   densityFactor?: number;
+  cropToContent?: boolean;
+  alignBy?: AlignmentMode;
   gap?: number | string;
   renderImage?: RenderImageFn;
   className?: string;

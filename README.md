@@ -89,6 +89,25 @@ Imagine you have two logos:
 <KubbeStrip logos={logos} scaleFactor={0.5} />
 ```
 
+### `alignBy`
+
+How to vertically align logos. Default is `"bounds"`.
+
+- `"bounds"` — Align by geometric center (bounding box)
+- `"visual-center"` — Align by visual weight center (accounts for asymmetric logos)
+
+```tsx
+<KubbeStrip logos={logos} alignBy="visual-center" />
+```
+
+### `cropToContent`
+
+When enabled, logos are cropped to their content bounds and returned as base64 images. This removes any whitespace/padding baked into the original image files. Default is `false`.
+
+```tsx
+<KubbeStrip logos={logos} cropToContent />
+```
+
 ## Using the Hook
 
 For custom layouts, use the `useKubbe` hook directly:

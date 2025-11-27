@@ -1,4 +1,4 @@
-import type { MeasurementResult, NormalizedLogo, LogoSource } from "./types";
+import type { LogoSource, MeasurementResult, NormalizedLogo } from "./types";
 
 export function normalizeSource(source: string | LogoSource): LogoSource {
   if (typeof source === "string") {
@@ -31,7 +31,7 @@ export function calculateNormalizedDimensions(
   // scaleFactor of 0 = uniform widths
   // scaleFactor of 1 = uniform heights
   // scaleFactor of ~0.5 = visual balance
-  let normalizedWidth = Math.pow(aspectRatio, scaleFactor) * baseSize;
+  let normalizedWidth = aspectRatio ** scaleFactor * baseSize;
   let normalizedHeight = normalizedWidth / aspectRatio;
 
   // Apply density compensation if available
@@ -48,7 +48,7 @@ export function calculateNormalizedDimensions(
 
     // Apply inverse scaling: denser logos get smaller, lighter logos get larger
     // Use a dampened scale to avoid extreme adjustments
-    const densityScale = Math.pow(1 / densityRatio, densityFactor * 0.5);
+    const densityScale = (1 / densityRatio) ** (densityFactor * 0.5);
 
     // Clamp the scale to reasonable bounds (0.5x to 2x)
     const clampedScale = Math.max(0.5, Math.min(2, densityScale));
@@ -94,5 +94,6 @@ export function createNormalizedLogo(
     normalizedHeight: height,
     aspectRatio: contentHeight > 0 ? contentWidth / contentHeight : 1,
     pixelDensity: measurement.pixelDensity,
+    visualCenter: measurement.visualCenter,
   };
 }
