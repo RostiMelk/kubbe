@@ -4,19 +4,19 @@ import {
   DEFAULT_CONTRAST_THRESHOLD,
   DEFAULT_DENSITY_FACTOR,
   DEFAULT_SCALE_FACTOR,
-} from "./constants";
-import {
-  cropToDataUrl,
-  loadImage,
-  measureWithContentDetection,
-} from "./measure";
-import { createNormalizedLogo, normalizeSource } from "./normalize";
+} from "../constants";
 import type {
   LogoSource,
   NormalizedLogo,
   UseKubbeOptions,
   UseKubbeResult,
-} from "./types";
+} from "../types";
+import {
+  cropToDataUrl,
+  loadImage,
+  measureWithContentDetection,
+} from "../utils/measure";
+import { createNormalizedLogo, normalizeSource } from "../utils/normalize";
 
 export function useKubbe(options: UseKubbeOptions): UseKubbeResult {
   const {

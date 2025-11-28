@@ -1,4 +1,4 @@
-import type { LogoSource, MeasurementResult, NormalizedLogo } from "./types";
+import type { LogoSource, MeasurementResult, NormalizedLogo } from "../types";
 
 export function normalizeSource(source: string | LogoSource): LogoSource {
   if (typeof source === "string") {

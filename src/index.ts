@@ -1,5 +1,6 @@
-export { KubbeStrip } from "./KubbeStrip";
-export { cropToDataUrl } from "./measure";
+export { KubbeStrip } from "./components/KubbeStrip";
+export { DEFAULT_ALIGN_BY } from "./constants";
+export { useKubbe } from "./hooks/useKubbe";
 export type {
   AlignmentMode,
   BoundingBox,
@@ -12,4 +13,5 @@ export type {
   UseKubbeResult,
   VisualCenter,
 } from "./types";
-export { useKubbe } from "./useKubbe";
+export { getVisualCenterTransform } from "./utils/getVisualCenterTransform";
+export { cropToDataUrl } from "./utils/measure";

@@ -1,4 +1,4 @@
-import type { BoundingBox, MeasurementResult, VisualCenter } from "./types";
+import type { BoundingBox, MeasurementResult, VisualCenter } from "../types";
 
 export function cropToDataUrl(
   img: HTMLImageElement,

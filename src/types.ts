@@ -1,6 +1,10 @@
 import type { CSSProperties, ImgHTMLAttributes, ReactNode } from "react";
 
-export type AlignmentMode = "bounds" | "visual-center";
+export type AlignmentMode =
+  | "bounds"
+  | "visual-center"
+  | "visual-center-x"
+  | "visual-center-y";
 
 export interface LogoSource {
   src: string;

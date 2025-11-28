@@ -91,10 +91,12 @@ Imagine you have two logos:
 
 ### `alignBy`
 
-How to vertically align logos. Default is `"bounds"`.
+How to align logos. Default is `"bounds"`.
 
 - `"bounds"` — Align by geometric center (bounding box)
 - `"visual-center"` — Align by visual weight center (accounts for asymmetric logos)
+- `"visual-center-x"` — Align by visual weight center horizontally only
+- `"visual-center-y"` — Align by visual weight center vertically only
 
 ```tsx
 <KubbeStrip logos={logos} alignBy="visual-center" />
@@ -130,6 +132,32 @@ function CustomGrid() {
           src={logo.src}
           width={logo.normalizedWidth}
           height={logo.normalizedHeight}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+### `getVisualCenterTransform`
+
+When using the hook, you can apply visual center alignment with the `getVisualCenterTransform` helper:
+
+```tsx
+import { useKubbe, getVisualCenterTransform } from "kubbe";
+
+function CustomGrid() {
+  const { normalizedLogos } = useKubbe({ logos });
+
+  return (
+    <div className="grid">
+      {normalizedLogos.map((logo) => (
+        <img
+          key={logo.src}
+          src={logo.src}
+          width={logo.normalizedWidth}
+          height={logo.normalizedHeight}
+          style={{ transform: getVisualCenterTransform(logo, "visual-center") }}
         />
       ))}
     </div>

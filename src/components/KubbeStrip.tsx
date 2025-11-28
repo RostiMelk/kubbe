@@ -1,7 +1,8 @@
 import { type CSSProperties, useEffect } from "react";
-import { DEFAULT_GAP } from "./constants";
-import type { ImageRenderProps, KubbeStripProps } from "./types";
-import { useKubbe } from "./useKubbe";
+import { DEFAULT_ALIGN_BY, DEFAULT_GAP } from "../constants";
+import { useKubbe } from "../hooks/useKubbe";
+import type { ImageRenderProps, KubbeStripProps } from "../types";
+import { getVisualCenterTransform } from "../utils/getVisualCenterTransform";
 
 function DefaultImage(props: ImageRenderProps) {
   return <img {...props} />;
@@ -15,7 +16,7 @@ export function KubbeStrip({
   densityAware,
   densityFactor,
   cropToContent,
-  alignBy = "bounds",
+  alignBy = DEFAULT_ALIGN_BY,
   gap = DEFAULT_GAP,
   renderImage,
   className,
@@ -59,23 +60,7 @@ export function KubbeStrip({
       data-kubbe-loading={isLoading}
     >
       {normalizedLogos.map((logo, index) => {
-        let transform: string | undefined;
-
-        if (alignBy === "visual-center" && logo.visualCenter) {
-          const scaleX =
-            logo.normalizedWidth /
-            (logo.contentBox?.width || logo.originalWidth);
-          const scaleY =
-            logo.normalizedHeight /
-            (logo.contentBox?.height || logo.originalHeight);
-
-          const offsetX = -logo.visualCenter.offsetX * scaleX;
-          const offsetY = -logo.visualCenter.offsetY * scaleY;
-
-          if (Math.abs(offsetX) > 0.5 || Math.abs(offsetY) > 0.5) {
-            transform = `translate(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px)`;
-          }
-        }
+        const transform = getVisualCenterTransform(logo, alignBy);
 
         return (
           <span
